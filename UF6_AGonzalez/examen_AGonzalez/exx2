@@ -1,0 +1,47 @@
+CREATE TABLE `empleats` (
+  `numemp` int(5) NOT NULL AUTO_INCREMENT,
+  `nomeni` varchar(30),
+  `oficina` int(5) ,
+  `titol` varchar(30) ,
+  `cap` int(5),
+  `quota` float(5),
+  `vendes` int(5),
+ 	primary key(`numemp`) ,
+	foreign key (`cap`)REFERENCES empleats(`numemp`)
+	);
+
+CREATE TABLE `oficines` (
+  `oficina` int(5) NOT NULL AUTO_INCREMENT,
+  `ciutat` varchar(30),
+  `dir` int(5) ,
+  `objectiu` float(5) ,
+  `vendes` int(5),
+ 	primary key(`oficina`) ,
+	foreign key (`dir`)REFERENCES empleats(`numemp`)
+	);
+
+CREATE TABLE `clients` (
+  `numclie` int(5) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(30),
+  `repclie` int(5) ,
+ 	primary key(`numclie`)
+	);
+
+CREATE TABLE `comandes` (
+  `codi` int(5) NOT NULL AUTO_INCREMENT,
+  `numcom` varchar(30),
+  `clie` int(5) ,
+  `rep` varchar(30) ,
+  `id_producte` int(5),
+  `quant` int(5),
+  `import` float(5),
+ 	primary key(`codi`) ,
+	foreign key (`clie`)REFERENCES clients(`numclie`)
+	);
+	
+/*a*/
+select nom from clients where repclie=`Alvaro Jaumes` or repclie=`Juan Rovira`
+/*b*/
+select cl.nom from clients cl,comandes co 
+where cl.repclie=(select numemp from empleats where nomeni=`Ana Bustamante`) and 
+cl.numclie=co.clie and cl.quant<3000;

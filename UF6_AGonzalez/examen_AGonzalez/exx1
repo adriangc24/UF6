@@ -1,0 +1,7 @@
+select * from empleados where salEmp>=(select avg(salEmp) from empleados) order by codDepto;
+
+select d.codDepto, d.nombreDpto, count(*) as 'Num empleados'
+from departamentos d, empleados e 
+where d.codDepto=e.codDepto 
+group by d.codDepto 
+having count(*) >= 3;
